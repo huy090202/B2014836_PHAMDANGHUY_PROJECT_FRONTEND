@@ -1,0 +1,110 @@
+.carousel__item {
+  border-radius: 10px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  .book-image {
+    width: 220px;
+    height: 250px;
+    background-image: url("@/assets/images/Books/bookImageTest2.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .book-detail {
+      opacity: 0;
+      padding: 10px;
+      background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+      transition: all 0.3s;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &:hover .book-detail {
+      opacity: 1;
+    }
+  }
+
+  .book-title {
+    width: 220px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.book-new {
+  padding: 0 20px;
+
+
+  .book-new-image {
+    width: 280px;
+    height: 360px;
+    background-image: url("@/assets/images/Books/bookImageTest1.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .book-new-title {
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      transform: translateY(100%);
+
+      .book-new-left {
+        overflow: hidden;
+        white-space: wrap;
+        text-overflow: ellipsis;
+      }
+
+      .book-new-right {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    &:hover .book-new-title {
+      transform: translateY(0%);
+      opacity: 0.8;
+    }
+  }
+}
+
+.book-btn {
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+}
+
+.book-aboutUs {
+  padding: 0 20px;
+
+  .book-aboutUs-image {
+    height: 500px;
+    background-image: url("@/assets/images/Banners/bannerAboutUs.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .book-aboutUs-content {
+    top: 10%;
+    right: 0;
+    height: 400px;
+    background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+}

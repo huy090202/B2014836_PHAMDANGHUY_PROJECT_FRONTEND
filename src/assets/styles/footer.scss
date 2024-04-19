@@ -1,0 +1,29 @@
+footer {
+    height: 100px;
+    background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+
+    .footer-logo {
+        width: 150px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .footer-social {
+        .fab {
+            padding: 10px;
+            font-size: 30px;
+
+            &.fa-facebook-f {
+                color: #3b5998;
+            }
+
+            &.fa-twitter {
+                color: #00acee;
+            }
+
+            &.fa-instagram {
+                color: #e4405f;
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+header {
+    height: 100px;
+    z-index: 999999;
+    background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+
+    .header-logo {
+        width: 150px;
+        object-fit: cover;
+    }
+
+    input {
+        border: transparent;
+
+        &:focus {
+            outline: none;
+            border: transparent;
+            box-shadow: none;
+        }
+    }
+
+    .nav-link {
+        color: #000;
+        font-size: 22px;
+        font-weight: 500;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+
+    .offcanvas {
+        width: 300px !important;
+    }
+}
