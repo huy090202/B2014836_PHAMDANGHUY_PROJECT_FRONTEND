@@ -1,0 +1,36 @@
+.detail-container {
+    padding: 0 20px;
+
+    .detail-img {
+        width: 100%;
+        height: 66vh;
+        background-image: url("@/assets/images/Books/bookImageTest2.avif");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .detail-content-right {
+        height: 66vh;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        .content-right-borrow {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-right-btn {
+            padding: 5px 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:active {
+                transform: scale(0.95);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+}
