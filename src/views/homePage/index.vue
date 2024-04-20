@@ -118,7 +118,7 @@ export default defineComponent({
         <div class="row">
           <div class="col-12">
             <h2 class="text-center text-uppercase fw-bold m-4">
-              Books worth borrowing
+              Sách mượn nhiều
             </h2>
           </div>
 
@@ -147,7 +147,7 @@ export default defineComponent({
           </div>
 
           <div class="col-12">
-            <h2 class="text-center text-uppercase fw-bold m-4">New books</h2>
+            <h2 class="text-center text-uppercase fw-bold m-4">Sách mới</h2>
           </div>
 
           <div class="col-12">
@@ -232,7 +232,7 @@ export default defineComponent({
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2 class="text-center text-uppercase fw-bold m-4">About us</h2>
+            <h2 class="text-center text-uppercase fw-bold m-4">Giới thiệu</h2>
           </div>
 
           <div class="col-12">

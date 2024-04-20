@@ -27,6 +27,23 @@ header {
     }
 
     .offcanvas {
-        width: 300px !important;
+        width: 350px !important;
+
+        .offcanvas-header {
+            height: 100px;
+            border-color: #ccc;
+        }
+
+        .list-group-item {
+            &:hover {
+                transition: all 0.3s;
+                background-color: #d9dbdd;
+            }
+
+            .account-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
     }
 }

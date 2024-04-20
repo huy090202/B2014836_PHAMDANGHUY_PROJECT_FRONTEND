@@ -12,12 +12,22 @@ const routes = [
         component: () => import("@/views/homePage/index.vue"),
       },
       {
-        path: "detail/:id",
+        path: ":id",
         name: "detail",
         component: () => import("@/views/detailPage/index.vue"),
       }
     ],
   },
+  {
+    path: "/logIn",
+    name: "logIn",
+    component: () => import("@/views/auth/logInPage/index.vue"),
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("@/views/auth/registerPage/index.vue"),
+  }
 ];
 
 const router = createRouter({

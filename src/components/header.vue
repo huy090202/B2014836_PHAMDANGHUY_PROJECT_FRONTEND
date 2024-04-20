@@ -8,13 +8,13 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
       class="container d-flex justify-content-between align-items-center h-100"
     >
       <div>
-        <a class="navbar-brand" href="#">
+        <router-link class="navbar-brand" to="/">
           <img
             class="header-logo"
             src="../assets/LogoWeb.png"
             alt="Logo Website"
           />
-        </a>
+        </router-link>
       </div>
 
       <div class="form-group d-flex w-50 position-relative">
@@ -57,8 +57,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
       id="offcanvasRight"
       aria-labelledby="offcanvasRightLabel"
     >
-      <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Welcome</h5>
+      <div class="offcanvas-header border-bottom py-4">
+        <div class="w-100 fw-bold text-uppercase fs-5">
+          Đăng nhập để tiếp tục! 
+        </div>
         <button
           type="button"
           class="btn-close text-reset"
@@ -66,7 +68,36 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
           aria-label="Close"
         ></button>
       </div>
-      <div class="offcanvas-body">...</div>
+      <div class="offcanvas-body px-0 pt-0">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item fw-bold">
+            <router-link to="" class="d-flex align-items-center gap-4 text-decoration-none text-black">
+              <div class="account-icon d-flex align-items-center justify-content-center">
+                <i class="fa-regular fa-address-book"></i>
+              </div>
+              Thông tin tài khoản
+            </router-link>
+          </li>
+
+          <li class="list-group-item fw-bold">
+            <router-link to="/logIn" class="d-flex align-items-center gap-4 text-decoration-none text-black">
+              <div class="account-icon d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </div>
+              Đăng nhập
+            </router-link>
+          </li>
+
+          <li class="list-group-item fw-bold">
+            <router-link to="" class="d-flex align-items-center gap-4 text-decoration-none text-black">
+              <div class="account-icon d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </div>
+              Đăng xuất
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
 </template>
