@@ -2,6 +2,26 @@ import { createRouter, createWebHistory } from "vue-router";
 import ClientTemplate from "@/templates/clientTemplate.vue";
 import AdminTemplate from "@/templates/adminTemplate.vue";
 import UserTemplate from "@/templates/userTemplate.vue";
+import { adminStore } from "@/store/adminStore";
+import { userStore } from "@/store/userStore";
+
+const requireAdmin = (to, from, next) => {
+  const isAdminStore = adminStore()
+  if (isAdminStore.isLoggedIn) {
+    next()
+  } else {
+    next({ name: "logInAdmin", params: {} })
+  }
+};
+
+const requireUser = (to, from, next) => {
+  const isUserStore = userStore()
+  if (isUserStore.isLoggedIn) {
+    next()
+  } else {
+    next({ name: "logInUser", params: {} })
+  }
+};
 
 const routes = [
   {
@@ -16,6 +36,7 @@ const routes = [
       {
         path: "/userInfo",
         component: UserTemplate,
+        beforeEnter: requireUser,
         children: [
           {
             path: "",
@@ -47,10 +68,16 @@ const routes = [
     ],
   },
   {
-    path: "/logIn",
-    name: "logIn",
+    path: "/logIn/admin",
+    name: "logInAdmin",
     component: () => import("@/views/auth/logInPage/index.vue"),
   },
+  {
+    path: "/logIn",
+    name: "logInUser",
+    component: () => import("@/views/auth/logInPage/index.vue"),
+  },
+
   {
     path: "/register",
     name: "register",
@@ -59,6 +86,7 @@ const routes = [
   {
     path: "/admin",
     component: AdminTemplate,
+    beforeEnter: requireAdmin,
     children: [
       {
         path: "",
