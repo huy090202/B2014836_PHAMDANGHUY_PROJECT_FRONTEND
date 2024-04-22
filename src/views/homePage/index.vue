@@ -39,7 +39,7 @@ export default defineComponent({
     tabindex="0"
   >
     <div id="banners">
-      <div id="carouselExampleFade" class="carousel slide carousel-fade">
+      <div id="carouselExampleFade" data-bs-ride="carousel" data-bs-interval="3000" class="carousel slide carousel-fade">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img

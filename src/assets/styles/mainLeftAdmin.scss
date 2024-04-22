@@ -1,0 +1,26 @@
+.main-left-admin {
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+    .content {
+        .content-title {
+            padding: 10px 15px;
+        }
+
+        .list-group-item {
+            font-size: 14px;
+
+            &:hover {
+                color: #058c8c;
+                background-color: #f6f6f7;
+            }
+        }
+    }
+}
+
+.click {
+    color: #058c8c;
+    background-color: #f6f6f7;
+}

@@ -8,7 +8,7 @@
                 <div class="col-12 d-flex justify-content-between align-items-center">
                     <img
                         class="footer-logo"
-                        src="../assets/LogoWeb.png"
+                        src="@/assets/LogoWeb.png"
                         alt="Logo Website"
                     />
 

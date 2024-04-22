@@ -1,0 +1,36 @@
+.search-main {
+    min-height: calc(100vh - 297px);
+
+    .book-new-image {
+        width: 280px;
+        height: 360px;
+        background-image: url("@/assets/images/Books/bookImageTest1.avif");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        .book-new-title {
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            transform: translateY(100%);
+
+            .book-new-left {
+                overflow: hidden;
+                white-space: wrap;
+                text-overflow: ellipsis;
+            }
+
+            .book-new-right {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &:hover .book-new-title {
+            transform: translateY(0%);
+            opacity: 0.8;
+        }
+    }
+}

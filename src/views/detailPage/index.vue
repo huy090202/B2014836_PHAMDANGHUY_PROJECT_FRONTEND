@@ -42,7 +42,7 @@
             
             <div class="col-8">
               <label for="quatity">Chọn số lượng sách muốn mượn: </label>
-              <input type="number" class="form-control" id="quatity">
+              <input type="text" value="1" class="form-control" id="quatity" disabled>
             </div>
             <div class="col-4 d-flex flex-column">
               <label for="borrow">Xác nhận mượn: </label>

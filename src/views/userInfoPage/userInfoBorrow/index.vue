@@ -1,0 +1,48 @@
+<script></script>
+
+<template>
+    <div class="userInfo-borrow rounded p-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Đọc giả</th>
+                <th scope="col">Sách</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Ngày mượn</th>
+                <th scope="col">Ngày trả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Phạm Đang Huy</td>
+                    <td>Vi tích phân A1</td>
+                    <td>Đang mượn</td>
+                    <td>2024-04-12</td>
+                    <td>2024-04-20</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Phạm Đang Huy</td>
+                    <td>Vi tích phân A1</td>
+                    <td>Đang mượn</td>
+                    <td>2024-04-12</td>
+                    <td>2024-04-20</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Phạm Đang Huy</td>
+                    <td>Vi tích phân A1</td>
+                    <td>Đang mượn</td>
+                    <td>2024-04-12</td>
+                    <td>2024-04-20</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+    @import url("@/views/userInfoPage/userInfoBorrow/style.scss");
+</style>

@@ -1,0 +1,14 @@
+.header-admin {
+    background-image: linear-gradient(to right, #a6a6a6, #fafafa);
+
+    .header-admin-logo {
+        width: 200px;
+        height: 80px;
+    }
+
+    i {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -11,7 +11,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
         <router-link class="navbar-brand" to="/">
           <img
             class="header-logo"
-            src="../assets/LogoWeb.png"
+            src="@/assets/LogoWeb.png"
             alt="Logo Website"
           />
         </router-link>
@@ -71,7 +71,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
       <div class="offcanvas-body px-0 pt-0">
         <ul class="list-group list-group-flush">
           <li class="list-group-item fw-bold">
-            <router-link to="" class="d-flex align-items-center gap-4 text-decoration-none text-black">
+            <router-link to="/userInfo" class="d-flex align-items-center gap-4 text-decoration-none text-black">
               <div class="account-icon d-flex align-items-center justify-content-center">
                 <i class="fa-regular fa-address-book"></i>
               </div>

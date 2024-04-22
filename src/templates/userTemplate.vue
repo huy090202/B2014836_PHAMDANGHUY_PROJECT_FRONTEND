@@ -1,22 +1,19 @@
 <script>
-    import HeaderAdmin from "@/components/headerAdmin.vue";
-    import MainLeftAdmin from "@/components/mainLeftAdmin.vue";
+    import MainLeftUserInfo from "@/components/mainLeftUserInfo.vue";
 
     export default {
         components: {
-            HeaderAdmin,
-            MainLeftAdmin
+            MainLeftUserInfo
         }
     };
 </script>
 
 <template>
     <div class="main">
-        <HeaderAdmin />
         <main class="container mt-3">
             <div class="row">
                 <div class="col-3" >
-                    <MainLeftAdmin />
+                    <MainLeftUserInfo />
                 </div>
 
                 <div class="col-9">
@@ -29,9 +26,9 @@
 
 <style lang="scss" scoped>
 .main {
-    min-height: 100vh;
+    min-height: calc(100vh - 240px);
     position: relative;
-    background-color: #f6f6f7;
+    background-color: #fff;
 }
 
 .main .col-3 {
