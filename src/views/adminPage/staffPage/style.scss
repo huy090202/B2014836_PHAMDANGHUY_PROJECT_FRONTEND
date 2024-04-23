@@ -9,4 +9,13 @@
         color: #fff;
         background-color: #058c8c;
     }
+
+    i {
+        font-size: 20px;
+        color: rgb(221, 221, 47);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }

@@ -6,20 +6,40 @@ import { adminStore } from "@/store/adminStore";
 import { userStore } from "@/store/userStore";
 
 const requireAdmin = (to, from, next) => {
-  const isAdminStore = adminStore()
+  const isAdminStore = adminStore();
   if (isAdminStore.isLoggedIn) {
-    next()
+    next();
   } else {
-    next({ name: "logInAdmin", params: {} })
+    const dataAdmin = localStorage.getItem("admin");
+    const dataToken = localStorage.getItem("accessToken");
+
+    if (dataAdmin && dataAdmin !== undefined && dataToken && dataToken !== undefined) {
+      isAdminStore.setLocal(JSON.parse(dataAdmin), dataToken);
+      next();
+    } else {
+      next({ name: "logInAdmin", params: {} });
+    }
   }
 };
 
+
 const requireUser = (to, from, next) => {
-  const isUserStore = userStore()
+  const isUserStore = userStore();
   if (isUserStore.isLoggedIn) {
-    next()
+    next();
   } else {
-    next({ name: "logInUser", params: {} })
+    const dataUser = localStorage.getItem("user");
+    const dataTokenUser = localStorage.getItem("accessToken");
+
+    console.log(dataUser, dataTokenUser);
+
+
+    if (dataUser && dataUser !== undefined && dataTokenUser && dataTokenUser !== undefined) {
+      isUserStore.setLocal(JSON.parse(dataUser), dataTokenUser);
+      next();
+    } else {
+      next({ name: "logInUser", params: {} });
+    }
   }
 };
 
@@ -27,6 +47,7 @@ const routes = [
   {
     path: "/",
     component: ClientTemplate,
+    beforeEnter: requireUser,
     children: [
       {
         path: "",
@@ -129,9 +150,24 @@ const routes = [
         component: () => import("@/views/adminPage/borrowPage/index.vue"),
       },
       {
-        path: "/admin/statusBorrow",
-        name: "statusBorrow",
-        component: () => import("@/views/adminPage/borrowPage/statusBorrow/index.vue"),
+        path: "/admin/updateBorrow",
+        name: "updateBorrow",
+        component: () => import("@/views/adminPage/borrowPage/updateBorrow/index.vue"),
+      },
+      {
+        path: "/admin/updateBook/:id",
+        name: "updateBook",
+        component: () => import("@/views/adminPage/bookPage/updateBook/index.vue"),
+      },
+      {
+        path: "/admin/updateStaff/:id",
+        name: "updateStaff",
+        component: () => import("@/views/adminPage/staffPage/updateStaff/index.vue"),
+      },
+      {
+        path: "/admin/updatePublishing/:id",
+        name: "updatePublishing",
+        component: () => import("@/views/adminPage/publishingPage/updatePublishing/index.vue"),
       }
     ]
   },

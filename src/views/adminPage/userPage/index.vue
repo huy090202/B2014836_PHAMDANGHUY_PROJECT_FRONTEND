@@ -1,5 +1,42 @@
 <script>
-    
+    import { ref, onMounted } from 'vue'
+    import { useRoute } from 'vue-router';
+    import { getAllDG } from '@/services/docGia.service';
+
+    export default {
+        setup() {
+            const route = useRoute();
+            const isUser = ref(false);
+            const dataUser = ref([]);
+
+            const fetchData = async () => {
+                try {
+                    if (route.path === '/admin') {
+                        isUser.value = true;
+                        const res = await getAllDG("All");
+                        dataUser.value = res.allDG;
+                    } 
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            const convertDate = (date) => {
+                const d = new Date(date);
+                return d.toISOString().split('T')[0];
+            }
+
+            onMounted(async () => {
+                await fetchData();
+            });
+
+            return {
+                isUser,
+                dataUser,
+                convertDate
+            }
+        }
+    }
 </script>
 
 <template>
@@ -17,96 +54,15 @@
                 <th scope="col">Điện thoại</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">8</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">9</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td>Phạm Đang</td>
-                    <td>Huy</td>
-                    <td>2002-02-09</td>
-                    <td>Nam</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
+            <tbody v-if="dataUser">
+                <tr v-for="(h, i) in dataUser" :key="h._id">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ isUser ? h.HoLot : "NaN" }}</td>
+                    <td>{{ isUser ? h.Ten : "NaN" }}</td>
+                    <td>{{ isUser ? convertDate(h.NgaySinh) : "NaN" }}</td>
+                    <td>{{ isUser ? h.Phai : "NaN" }}</td>
+                    <td>{{ isUser ? h.DiaChi : "NaN" }}</td>
+                    <td>{{ isUser ? h.DienThoai : "NaN" }}</td>
                 </tr>
             </tbody>
         </table>

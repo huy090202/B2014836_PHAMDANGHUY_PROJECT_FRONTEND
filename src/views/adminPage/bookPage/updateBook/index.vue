@@ -1,104 +1,92 @@
 <script>
-    import { onMounted, ref, watch } from "vue"
+    import { onMounted, ref } from "vue"
+    import { useRoute } from "vue-router"
+    import { updateSach, getDetailSach } from "@/services/sach.service";
     import { getAllNXB } from "@/services/nhaXuatBan.service";
-    import { createSach } from "@/services/sach.service";
 
     export default {
         setup () {
-            const nhaXuatBan = ref([]);
+            const router = useRoute();
+
             const TenSach = ref();
-            const HinhAnh = ref();
             const DonGia = ref();
-            const SoQuyen = ref(0);
+            const SoQuyen = ref();
             const NamXuatBan = ref();
             const MaNXB = ref();
             const TacGia = ref();
 
-            const getNXB = async () => {
-                try {
-                    const res = await getAllNXB("All");
-                    nhaXuatBan.value = res.data;
+            const nxb = ref([]);
 
-                    if (nhaXuatBan.value) {
-                        MaNXB.value = nhaXuatBan.value[0].MaNXB;
+            const { id } = router.params;
+            const getData = async () => {
+                try {
+                    if (id) {
+                        console.log("ID: ", id);
+                        const book = await getDetailSach(id);
+                        console.log("Book: ", book);
+                        if (book.data) {
+                            const dataBook = book.data;
+                            TenSach.value = dataBook.TenSach;
+                            DonGia.value = dataBook.DonGia;
+                            SoQuyen.value = dataBook.SoQuyen;
+                            NamXuatBan.value = dataBook.NamXuatBan;
+                            MaNXB.value = dataBook.MaNXB;
+                            TacGia.value = dataBook.TacGia;
+                        }
                     }
+                    const res = await getAllNXB("All");
+                    nxb.value = res.data;
                 } catch (e) {
                     console.log(e);
                 }
             }
 
-            const clearInput = () => {
-                TenSach.value = "";
-                HinhAnh.value = "";
-                DonGia.value = "";
-                SoQuyen.value = 0;
-                NamXuatBan.value = "";
-                MaNXB.value = "";
-                TacGia.value = "";
-            }
-
-            const handleCreate = async (e) => {
+            const handleEditBook = async (e) => {
                 e.preventDefault();
 
-                const donGia = +(DonGia.value.replace('.', ''));
-
-                if(isNaN(donGia)) {
-                    return alert("Đơn giá không hợp lệ");
-                }
-
                 try {
-
-                    const res = await createSach({
+                    const res = await updateSach({
+                        MaSach: id,
                         TenSach: TenSach.value,
-                        HinhAnh: HinhAnh.value,
-                        DonGia: donGia,
+                        DonGia: DonGia.value,
                         SoQuyen: +SoQuyen.value,
                         NamXuatBan: NamXuatBan.value,
                         MaNXB: MaNXB.value,
-                        TacGia: TacGia.value
+                        TacGia: TacGia.value,
                     });
 
-                    console.log("Thêm sách thành công! ", res);
-
-                    clearInput();
-                    await getNXB();
+                    alert("Cập nhật thông tin sách thành công!");
                 } catch (e) {
-                    console.log("Thêm sách thất bại! ", e);
+                    console.log("Cập nhật thông tin sách thất bại!", e);
                 }
             }
 
             onMounted(async () => {
-                document.title = 'Thêm mới sách';
-                await getNXB();
+                await getData();
             });
-            
+
             return {
-                nhaXuatBan,
-                handleCreate,
                 TenSach,
-                HinhAnh,
                 DonGia,
                 SoQuyen,
                 NamXuatBan,
                 MaNXB,
                 TacGia,
+                handleEditBook,
+                nxb
             }
+
         }
     }
 </script>
 
 <template>
-    <div class="new-book rounded p-4">
-        <h4 class="text-uppercase fw-bold">Thêm sách mới</h4>
-        <form @submit="handleCreate">
+    <div class="update-book rounded p-4">
+        <h4 class="text-uppercase fw-bold">Cập nhật thông tin sách</h4>
+        <form @submit="handleEditBook">
             <div class="mb-3">
                 <label for="bookName" class="form-label fw-bold fs-6">Tên sách: </label>
                 <input type="text" class="form-control" id="bookName" placeholder="Nhập vào tên sách" v-model="TenSach">
-            </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Hình ảnh: </label>
-                <input class="form-control" type="text" id="formFile" placeholder="Nhập vào tên hình ảnh" v-model="HinhAnh">
             </div>
 
             <div class="mb-3">
@@ -118,9 +106,9 @@
 
             <div class="mb-3">
                 <label for="pulishing" class="form-label fw-bold fs-6">Nhà xuất bản: </label>
-                <select class="form-control" id="pulishing" v-if="nhaXuatBan" v-model="MaNXB">
-                    <option :value="nxb.MaNXB" v-for="nxb in nhaXuatBan" :key="nxb.MaNXB">
-                        {{ nxb.TenNXB }}
+                <select class="form-control" id="pulishing" v-if="nxb" v-model="MaNXB">
+                    <option :value="el.MaNXB" v-for="el in nxb" :selected="el.MaNXB === MaNXB.value">
+                        {{ el.TenNXB }}
                     </option>
                 </select>
             </div>
@@ -130,11 +118,11 @@
                 <input type="text" class="form-control" id="bookAuthor" placeholder="Nhập vào tên tác giả" v-model="TacGia">
             </div>
 
-            <button type="submit" class="btn btn-primary">Thêm mới</button>
+            <button type="submit" class="btn btn-primary" >Xác nhận</button>
         </form>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    @import url("@/views/adminPage/bookPage/newBooks/style.scss");
+    @import url("@/views/adminPage/bookPage/updateBook/style.scss");
 </style>

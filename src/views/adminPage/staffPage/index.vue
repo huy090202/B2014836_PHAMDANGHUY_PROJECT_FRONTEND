@@ -1,5 +1,36 @@
 <script>
-    
+    import { ref, onMounted } from 'vue'
+    import { useRoute } from 'vue-router';
+    import { getAllNV } from '@/services/nhanVien.service';
+
+    export default {
+        setup() {
+            const route = useRoute();
+            const isStaff = ref(false);
+            const dataStaff = ref([]);
+
+            const fetchData = async () => {
+                try {
+                    if (route.path === '/admin/staffs') {
+                        isStaff.value = true;
+                        const res = await getAllNV("All");
+                        dataStaff.value = res.allNV;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            onMounted(async () => {
+                await fetchData();
+            });
+
+            return {
+                isStaff,
+                dataStaff
+            }
+        }
+    }
 </script>
 
 <template>
@@ -21,30 +52,18 @@
                 <th scope="col">Hành động</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Phạm Đang Huy</td>
-                    <td>Nhân viên</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Phạm Đang Huy</td>
-                    <td>Nhân viên</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Phạm Đang Huy</td>
-                    <td>Nhân viên</td>
-                    <td>Cà Mau</td>
-                    <td>0788793092</td>
-                    <td>Xóa</td>
+            <tbody v-if="dataStaff">
+                <tr v-for="(h, i) in dataStaff" :key="h._id">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ isStaff ? h.HoTenNV : "NaN" }}</td>
+                    <td>{{ isStaff ? h.ChucVu : "NaN" }}</td>
+                    <td>{{ isStaff ? h.DiaChi : "NaN" }}</td>
+                    <td>{{ isStaff ? h.DienThoai : "NaN" }}</td>
+                    <td class="text-center">
+                        <router-link :to="'/admin/updateStaff/' + h.MSNV">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </router-link>
+                    </td>
                 </tr>
             </tbody>
         </table>

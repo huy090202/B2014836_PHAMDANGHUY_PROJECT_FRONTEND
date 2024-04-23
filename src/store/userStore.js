@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { logIn } from '@/services/docGia.service';
+import { logIn, getDetail } from '@/services/docGia.service';
 
 export const userStore = defineStore('user', {
     state: () => ({
@@ -21,6 +21,27 @@ export const userStore = defineStore('user', {
             } catch (e) {
                 console.error("Log in failed: ", e);
             }
+        },
+
+        async setInfoUser(data) {
+            try {
+                const res = await getDetail(data);
+
+                if (res) {
+                    this.user = res;
+                    this.accessToken = res.access_token;
+                } else {
+                    console.error("Get detail failed");
+                }
+            } catch (e) {
+                console.error("Get detail failed: ", e);
+            }
+        },
+
+        setLocal(data, accessToken) {
+            this.user = data;
+            this.isLoggedIn = true;
+            this.accessToken = accessToken;
         },
 
         logOut() {

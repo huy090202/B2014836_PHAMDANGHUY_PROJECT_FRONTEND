@@ -15,6 +15,7 @@
             });
 
             const isUser = ref(window.location.href.indexOf('admin') === -1)
+            console.log(isUser.value);
 
             onMounted(() => {
                 document.title = 'Đăng nhập';
@@ -24,6 +25,7 @@
                 try {
                     await isUserStore.logInUserStore(data);
                     if(isUserStore.isLoggedIn && isUserStore.user) {
+                        localStorage.setItem('user', JSON.stringify(isUserStore.user.data));
                         localStorage.setItem('accessToken', isUserStore.accessToken);
                         alert('Đăng nhập thành công');
                         setTimeout(() => {
@@ -41,6 +43,8 @@
                 try {
                     await isAdminStore.logInAdminStore(data);
                     if(isAdminStore.isLoggedIn && isAdminStore.admin) {
+                        localStorage.setItem('admin', JSON.stringify(isAdminStore.admin.data));
+                        localStorage.setItem('accessToken', isAdminStore.accessToken);
                         alert('Đăng nhập thành công');
                         setTimeout(() => {
                             router.push('/admin');

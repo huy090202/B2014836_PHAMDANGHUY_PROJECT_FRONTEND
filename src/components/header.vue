@@ -1,5 +1,54 @@
 <script>
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+  import "bootstrap/dist/js/bootstrap.bundle.min.js";
+  import { onMounted, ref, computed } from "vue";
+  import router from "@/routes";
+  import { userStore } from "@/store/userStore";
+
+  export default {
+    setup () {
+      const isUserStore = userStore();
+      const search = ref("");
+
+      const handleSearch = () => {
+        if (router) {
+          router.push(`/search?MaSach=${search.value}`);
+        }
+      }
+
+      onMounted(async () => {
+        
+        
+      })
+
+      const validate = computed(() => isUserStore.user !== null && isUserStore.user !== undefined && isUserStore.user);
+      console.log(validate.value);
+
+      const handleScrollTop = async () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+
+      const handleLoggout = async () => {
+          try {
+              localStorage.removeItem('user');
+              localStorage.removeItem('accessToken');
+              isUserStore.logOut();
+              router.push("/logIn");
+          } catch (error) {
+              console.log(error);
+          }
+      
+      }
+
+      return {
+        search,
+        handleSearch,
+        validate,
+        handleScrollTop,
+        handleLoggout
+      }
+    }
+  }
 </script>
 
 <template>
@@ -18,14 +67,19 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
       </div>
 
       <div class="form-group d-flex w-50 position-relative">
-        <input
-          type="text"
-          class="form-control px-5 py-2 rounded-pill"
-          placeholder="Tìm kiếm..."
-        />
-        <i
-          class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y p-3"
-        ></i>
+        <form method="get" @submit.prevent="handleSearch" class="w-100">
+          <input
+            type="text"
+            class="form-control px-5 py-2 rounded-pill"
+            placeholder="Tìm kiếm..."
+            v-model="search"
+          />
+          <button class="search-btn border border-0 position-absolute top-50 start-0 translate-middle-y p-3">
+            <i
+              class="fa-solid fa-magnifying-glass"
+            ></i>
+          </button>
+        </form>
       </div>
 
       <ul class="nav nav-pills">
@@ -71,24 +125,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
       <div class="offcanvas-body px-0 pt-0">
         <ul class="list-group list-group-flush">
           <li class="list-group-item fw-bold">
-            <router-link to="/userInfo" class="d-flex align-items-center gap-4 text-decoration-none text-black">
+            <router-link :to="validate ? '/userInfo' : '/logIn'" class="d-flex align-items-center gap-4 text-decoration-none text-black">
               <div class="account-icon d-flex align-items-center justify-content-center">
                 <i class="fa-regular fa-address-book"></i>
               </div>
-              Thông tin tài khoản
+              <span>Thông tin tài khoản</span>
             </router-link>
           </li>
 
-          <li class="list-group-item fw-bold">
-            <router-link to="/logIn" class="d-flex align-items-center gap-4 text-decoration-none text-black">
-              <div class="account-icon d-flex align-items-center justify-content-center">
-                <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </div>
-              Đăng nhập
-            </router-link>
-          </li>
-
-          <li class="list-group-item fw-bold">
+          <li class="list-group-item fw-bold" @click="handleLoggout">
             <router-link to="" class="d-flex align-items-center gap-4 text-decoration-none text-black">
               <div class="account-icon d-flex align-items-center justify-content-center">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>

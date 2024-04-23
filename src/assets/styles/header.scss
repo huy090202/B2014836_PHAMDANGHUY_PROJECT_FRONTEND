@@ -18,6 +18,12 @@ header {
         }
     }
 
+    .search-btn {
+        background-color: transparent !important;
+        border: transparent;
+        cursor: pointer;
+    }
+
     .nav-link {
         color: #000;
         font-size: 22px;

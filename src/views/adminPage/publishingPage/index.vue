@@ -1,5 +1,37 @@
 <script>
-    
+    import { ref, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
+    import { getAllNXB } from '@/services/nhaXuatBan.service';
+
+    export default {
+        setup () {
+            const route = useRoute();
+            const isPublishing = ref(false);
+            const dataPublishing = ref([]);
+
+            const fetchData = async () => {
+                try {
+                    if (route.path === '/admin/publishings') {
+                        isPublishing.value = true;
+                        const res = await getAllNXB("All");
+                        dataPublishing.value = res.data;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            onMounted(async () => {
+                await fetchData();
+            });
+
+            return {
+                isPublishing,
+                dataPublishing
+            }
+        
+        }
+    }
 </script>
 
 <template>
@@ -19,24 +51,16 @@
                 <th scope="col">Hành động</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Bộ GD&DT Cà Mau</td>
-                    <td>Cà Mau</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Bộ GD&DT Cần Thơ</td>
-                    <td>Cần Thơ</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Bộ GD&DT Hồ Chí Minh</td>
-                    <td>Hồ Chí Minh</td>
-                    <td>Xóa</td>
+            <tbody v-if="dataPublishing">
+                <tr v-for="(h, i) in dataPublishing" :key="h._id">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ isPublishing ? h.TenNXB : "NaN" }}</td>
+                    <td>{{ isPublishing ? h.DiaChi : "NaN" }}</td>
+                    <td class="text-center">
+                        <router-link :to="'/admin/updatePublishing/' + h.MaNXB">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </router-link>
+                    </td>
                 </tr>
             </tbody>
         </table>

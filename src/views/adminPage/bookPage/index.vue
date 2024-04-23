@@ -1,5 +1,36 @@
 <script>
-    
+    import { ref, onMounted } from 'vue'
+    import { useRoute } from 'vue-router';
+    import { getAllSach } from '@/services/sach.service';
+
+    export default {
+        setup () {
+            const route = useRoute();
+            const isBook = ref(false);
+            const dataBook = ref([]);
+
+            const fetchData = async () => {
+                try {
+                    if (route.path === '/admin/books') {
+                        isBook.value = true;
+                        const res = await getAllSach("All");
+                        dataBook.value = res.allSach;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            onMounted(async () => {
+                await fetchData();
+            });
+
+            return {
+                isBook,
+                dataBook
+            }
+        }
+    }
 </script>
 
 <template>
@@ -23,36 +54,20 @@
                 <th scope="col">Hành động</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Toán rời rạc</td>
-                    <td>100.000 VNĐ</td>
-                    <td>20</td>
-                    <td>2002</td>
-                    <td>Bộ GD&DT</td>
-                    <td>Phạm Đang Huy</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Toán rời rạc</td>
-                    <td>100.000 VNĐ</td>
-                    <td>20</td>
-                    <td>2002</td>
-                    <td>Bộ GD&DT</td>
-                    <td>Phạm Đang Huy</td>
-                    <td>Xóa</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Toán rời rạc</td>
-                    <td>100.000 VNĐ</td>
-                    <td>20</td>
-                    <td>2002</td>
-                    <td>Bộ GD&DT</td>
-                    <td>Phạm Đang Huy</td>
-                    <td>Xóa</td>
+            <tbody v-if="dataBook">
+                <tr v-for="(h, i) in dataBook" :key="h._id">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ isBook ? h.TenSach : "NaN" }}</td>
+                    <td>{{ isBook ? h.DonGia : "NaN" }} VNĐ</td>
+                    <td>{{ isBook ? h.SoQuyen : "NaN" }}</td>
+                    <td>{{ isBook ? h.NamXuatBan : "NaN" }}</td>
+                    <td>{{ isBook ? h.MaNXB : "NaN" }}</td>
+                    <td>{{ isBook ? h.TacGia : "NaN" }}</td>
+                    <td class="text-center">
+                        <router-link :to="'/admin/updateBook/' + h.MaSach">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </router-link>
+                    </td>
                 </tr>
             </tbody>
         </table>

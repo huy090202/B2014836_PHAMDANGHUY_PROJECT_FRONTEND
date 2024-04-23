@@ -95,19 +95,6 @@
                 </router-link>
             </ul>
         </div>
-        <div class="content">
-            <div class="content-title fw-bold text-uppercase">Cập nhật trạng thái</div>
-            <ul class="list-group list-group-flush">
-                <router-link class="text-black text-decoration-none" to="/admin/statusBorrow">
-                    <li class="list-group-item rounded fw-bold border border-0 ps-5"
-                    :class="{ 'click': selectedItem === 'statusBorrow' }"
-                    @click="selectItem('statusBorrow')">
-                        <i class="fa-solid fa-toggle-on"></i>
-                        Trạng thái phiếu mượn
-                    </li>
-                </router-link>
-            </ul>
-        </div>
     </div>
 </template>
 

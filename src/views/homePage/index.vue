@@ -2,7 +2,12 @@
 import { defineComponent } from "vue";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 
+import {ref, onMounted} from 'vue';
+import { useRoute } from "vue-router";
+import router from "@/routes";
+
 import "vue3-carousel/dist/carousel.css";
+import { getAllSach } from "@/services/sach.service";
 
 export default defineComponent({
   name: "Breakpoints",
@@ -26,7 +31,33 @@ export default defineComponent({
         snapAlign: "start"
       }
     }
-  })
+  }),
+
+  setup() {
+    const route = useRoute();
+    const isBook = ref(false);
+    const dataBook = ref([]);
+
+    const fetchData = async () => {
+      try {
+        isBook.value = true;
+        const res = await getAllSach("All");
+        dataBook.value = res.allSach;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(async () => {
+      await fetchData();
+    });
+
+    
+    return {
+      isBook,
+      dataBook
+    };
+  }
 });
 </script>
 
@@ -123,20 +154,18 @@ export default defineComponent({
           </div>
 
           <div class="col-12">
-            <Carousel v-bind="settings" :breakpoints="breakpoints">
-              <Slide v-for="slide in 10" :key="slide">
+            <Carousel v-if="dataBook" v-bind="settings" :breakpoints="breakpoints">
+              <Slide v-for="(h, i) in dataBook" :key="h._id">
                 <div class="carousel__item">
-                  <div class="book-image position-relative rounded-top-3">
-                    <div
-                      class="book-detail text-black position-absolute top-50 start-50 translate-middle rounded-pill"
-                    >
-                      Mượn sách
-                    </div>
+                  <div class="book-image position-relative rounded-top-3" :style="{ backgroundImage: `url(/src/assets/images/Books/${h.HinhAnh})` }">
+                    <router-link :to="'/detail/' + h.MaSach">
+                    <div class="book-detail text-black position-absolute top-50 start-50 translate-middle rounded-pill">
+                        Mượn sách
+                      </div>
+                    </router-link>
                   </div>
-                  <div
-                    class="book-title text-center text-uppercase fw-bold p-3"
-                  >
-                    <span>Dac nhan tam</span>
+                  <div class="book-title text-center text-uppercase fw-bold p-3">
+                    <span>{{ isBook ? h.TenSach : "NaN" }}</span>
                   </div>
                 </div>
               </Slide>
@@ -146,78 +175,27 @@ export default defineComponent({
             </Carousel>
           </div>
 
+
           <div class="col-12">
             <h2 class="text-center text-uppercase fw-bold m-4">Sách mới</h2>
           </div>
 
           <div class="col-12">
-            <div
-              class="book-new d-flex justify-content-between flex-row align-items-center flex-sm-wrap gap-4"
-            >
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test Book test Book test Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
+            <div v-if="dataBook">
+              <div
+                class="book-new d-flex justify-content-between flex-row align-items-center flex-sm-wrap gap-4"
+                >
+              <div v-for="(h, i) in dataBook" :key="h._id">
+                <div class="book-new-image rounded-3 position-relative" :style="{ backgroundImage: `url(/src/assets/images/Books/${h.HinhAnh})` }">
+                  <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
+                    <span class="w-75 book-new-left border-end border-secondary pe-2">{{ isBook ? h.TenSach : "NaN" }}</span>
+                    <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
+                      <i class="fa-regular fa-eye"></i>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test Book test Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="book-new-image rounded-3 position-relative">
-                <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
-                  <span class="w-75 book-new-left border-end border-secondary pe-2">Book test</span>
-                  <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                    <i class="fa-regular fa-eye"></i>
-                  </div>
-                </div>
-              </div>
+            </div>
             </div>
           </div>
 
