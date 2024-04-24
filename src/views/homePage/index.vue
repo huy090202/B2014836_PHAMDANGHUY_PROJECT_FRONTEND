@@ -189,9 +189,11 @@ export default defineComponent({
                 <div class="book-new-image rounded-3 position-relative" :style="{ backgroundImage: `url(/src/assets/images/Books/${h.HinhAnh})` }">
                   <div class="book-new-title d-flex justify-content-between align-items-center position-absolute w-100 text-black bg-white bottom-0 end-0 rounded-3 p-3">
                     <span class="w-75 book-new-left border-end border-secondary pe-2">{{ isBook ? h.TenSach : "NaN" }}</span>
-                    <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
-                      <i class="fa-regular fa-eye"></i>
-                    </div>
+                    <router-link :to="'/detail/' + h.MaSach" class="text-decoration-none text-black">
+                      <div class="book-new-right d-flex w-25 justify-content-end align-items-center">
+                        <i class="fa-regular fa-eye"></i>
+                      </div>
+                    </router-link>
                   </div>
                 </div>
               </div>

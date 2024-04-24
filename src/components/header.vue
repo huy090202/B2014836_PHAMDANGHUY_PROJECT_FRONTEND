@@ -21,7 +21,8 @@
       })
 
       const validate = computed(() => isUserStore.user !== null && isUserStore.user !== undefined && isUserStore.user);
-      console.log(validate.value);
+      
+      const hoTen = isUserStore.user.HoLot + " " + isUserStore.user.Ten;
 
       const handleScrollTop = async () => {
         document.body.scrollTop = 0;
@@ -45,7 +46,8 @@
         handleSearch,
         validate,
         handleScrollTop,
-        handleLoggout
+        handleLoggout,
+        hoTen
       }
     }
   }
@@ -113,7 +115,7 @@
     >
       <div class="offcanvas-header border-bottom py-4">
         <div class="w-100 fw-bold text-uppercase fs-5">
-          Đăng nhập để tiếp tục! 
+          {{ validate ? hoTen : "Đăng nhập để tiếp tục"}}
         </div>
         <button
           type="button"
